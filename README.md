@@ -47,8 +47,11 @@ git clone https://github.com/GeetanshRajesh/DemoApp2.git
   askQuestion(): Shuffles the flags and updates the correct answer.
 
 ###Screenshots
+
 <img width="337" alt="Screenshot 2024-07-22 at 11 31 40 PM" src="https://github.com/user-attachments/assets/f67c1fd6-0276-46df-85d9-472bed494c4c">
+
 <img width="303" alt="Screenshot 2024-07-22 at 11 32 13 PM" src="https://github.com/user-attachments/assets/8c07fc47-2810-4b8e-84a3-535bd7e7064d">
+
 <img width="325" alt="Screenshot 2024-07-22 at 11 31 53 PM" src="https://github.com/user-attachments/assets/6f813ca3-cfe0-4335-befb-2263b1efe02a">
 
 
