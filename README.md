@@ -46,7 +46,7 @@ git clone https://github.com/GeetanshRajesh/DemoApp2.git
   Flagtapped(_ number: Int): Checks if the selected flag is correct.
   askQuestion(): Shuffles the flags and updates the correct answer.
 
-###Screenshots
+### Screenshots
 
 <img width="337" alt="Screenshot 2024-07-22 at 11 31 40 PM" src="https://github.com/user-attachments/assets/f67c1fd6-0276-46df-85d9-472bed494c4c">
 
@@ -56,7 +56,7 @@ git clone https://github.com/GeetanshRajesh/DemoApp2.git
 
 
 
-###Contributing
+### Contributing
 
   Fork the repository.
   Create a new branch (git checkout -b feature-branch).
