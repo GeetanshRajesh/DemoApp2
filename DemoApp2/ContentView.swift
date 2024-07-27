@@ -8,85 +8,120 @@
 import SwiftUI
 
 struct ContentView: View {
-    @State private var Country = ["Estonia","France","Germany","Ireland","Italy","Monaco","Nigeria","Poland","Spain","UK","Ukraine","US"].shuffled()
-   @State private var CorrectAnswer = Int.random(in: 0...2)
-    @State private var showingscore = false
-    @State private var scoretitle = ""
+    @State private var countries = ["Estonia", "France", "Germany", "Ireland", "Italy", "Monaco", "Nigeria", "Poland", "Spain", "UK", "Ukraine", "US"]
+    @State private var correctAnswer = Int.random(in: 0...2)
+    @State private var showingScore = false
+    @State private var scoreTitle = ""
+    @State private var score = 0
+    @State private var gameOver = false
+
     var body: some View {
-        ZStack{
-            
-            ///  LinearGradient(colors: [.white ,.purple], startPoint: .top, endPoint: .bottom)
+        ZStack {
             RadialGradient(stops: [
                 .init(color: .purple, location: 0.3),
                 .init(color: .green, location: 0.3),
             ], center: .top, startRadius: 200, endRadius: 700)
             .ignoresSafeArea()
-            .ignoresSafeArea()
-            VStack{
+
+            VStack {
                 Spacer()
                 Text("Guess the flag")
                     .foregroundColor(.white)
                     .font(.title.bold())
                 Spacer()
-                
-                VStack(spacing: 20){
-                    
+
+                VStack(spacing: 20) {
                     VStack {
-                       
                         Text("Tap the flag of")
                             .foregroundColor(.secondary)
                             .font(.subheadline.weight(.heavy))
-                        Text(Country[CorrectAnswer]).foregroundColor(.blue)
+                        Text(countries[correctAnswer])
+                            .foregroundColor(.blue)
                             .font(.title.weight(.semibold))
-                        
                     }
-                    
+
                     ForEach(0..<3) { number in
                         Button {
-                            Flagtapped(number)
+                            flagTapped(number)
                         } label: {
-                            Image(Country[number])
+                            Image(countries[number])
+                                .renderingMode(.original)
+                                .clipShape(Capsule())
+                                .shadow(radius: 10)
                         }
-                        .clipShape(.capsule)
-                        .shadow(radius: /*@START_MENU_TOKEN@*/10/*@END_MENU_TOKEN@*/)
+                       
                     }
                 }
                 .frame(maxWidth: .infinity)
-                .padding(.vertical,20)
+                .padding(.vertical, 20)
                 .background(.regularMaterial)
-                .clipShape(.rect(cornerRadius: 30 )
-                )
+                .clipShape(RoundedRectangle(cornerRadius: 30))
+
                 Spacer()
                 Spacer()
-                Text("Score ???")
-                    .foregroundColor(/*@START_MENU_TOKEN@*/.blue/*@END_MENU_TOKEN@*/)
+                Text("Score: \(score)") // Display the score
+                    .foregroundColor(.blue)
                     .font(.title.bold())
                 Spacer()
-                
-                
             }
             .padding()
-            
+
+            if gameOver {
+                VStack {
+                    VStack{
+                        Text("Game Over")
+                            .font(.largeTitle)
+                            .foregroundColor(.secondary)
+                        Text("Your final score is \(score)")
+                            .font(.title)
+                            .foregroundColor(.secondary)
+                            .padding()
+                        
+                        Button(action: resetGame) {
+                            Text("Play Again")
+                                .padding()
+                                .background(Color.blue)
+                                .foregroundColor(.white)
+                                .clipShape(RoundedRectangle(cornerRadius: 10))
+                        }
+                    }
+                    .frame(maxWidth: .infinity)
+                    .padding(.vertical, 20)
+                    .background(Gradient(colors: [.purple , .green]))
+                    .clipShape(RoundedRectangle(cornerRadius: 30))
+                }
+                .padding()
+            }
         }
-        .alert(scoretitle, isPresented: $showingscore) {
-            Button("Continue", action: askQuestion)
-        } message: {
-            Text("Your score is ???")
-        }
-     }
-    func Flagtapped(_ number : Int){
-        if number == CorrectAnswer
-        {
-            scoretitle = "Correct"
-        }
-        else {
-            scoretitle = "Wrong"
-        }
-        showingscore = true
+        .onAppear(perform: startGame)
     }
-        func askQuestion() {
-        Country.shuffle()
-        CorrectAnswer = Int.random(in: 0...2)
+
+    func startGame() {
+        countries.shuffle()
+        correctAnswer = Int.random(in: 0...2)
+    }
+
+    func flagTapped(_ number: Int) {
+        if number == correctAnswer {
+            scoreTitle = "Correct"
+            score += 1
+            askQuestion()
+        } else {
+            scoreTitle = "Wrong"
+            gameOver = true
+        }
+        showingScore = true
+    }
+
+    func askQuestion() {
+        countries.shuffle()
+        correctAnswer = Int.random(in: 0...2)
+    }
+
+    func resetGame() {
+        score = 0
+        gameOver = false
+        askQuestion()
     }
 }
 
